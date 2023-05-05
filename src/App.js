@@ -1,25 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import './App.css'
+import axios from 'axios'
+import { useEffect, useState } from 'react'
 
-function App() {
+const App = () => {
+  const [mydata, setMydata] = useState([]);
+  const [bgcolor, setBgcolor] = useState("transparent");
+  useEffect(() => {
+    axios.get('https://run.mocky.io/v3/288760fc-f055-4bf7-bcb1-bda5157bfef3')
+      .then((ele) => setMydata(ele.data))
+  })
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <div className='list'>
+        {
+          mydata.map((color, index) => {
+            return (
+              <>
+                <li id={index} style={{ background: `${color}`, cursor: 'pointer' }} onClick={() => setBgcolor(color)} ></li>
+              </>
+            )
+          })
+        }
+      </div>
+      <span style={{ background: `${bgcolor}` }} className="abc"></span>
+    </>
+  )
 }
 
 export default App;
